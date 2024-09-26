@@ -1,6 +1,21 @@
+Report Link:
 https://www.overleaf.com/9953171639sckwrbknfzqk#9f16bb
 
-How to use Git
+
+How to use Git bash in case you are not using Source Tree (recommended)
 
 1: Open a Unix like Linux envirionment like MSYS, MinGW or Ubuntu
-2: 
+2: Type sudo apt-get install git
+3: Type git clone https://github.com/thienphucope/CNS_Assignment
+4: git remote set-url origin https://thienphucope:<token>@github.com/thienphucope/CNS_Assignment  (ask me for a token)
+5: Some git command: https://levanphu.info/git-command-nhung-lenh-git-nam-long-cua-lap-trinh-vien-bat-buoc-phai-biet#L%E1%BB%87nh_git_clone_
+
+
+How to install NTL and GMP Library for C++
+
+1: (same)
+2: sudo apt-get install libntl-dev libgmp-dev
+3: make "g++ *.cpp -o * -lntl
+To see Git Config: git config --list
+To see Remote: git remote -v
+To see branch: git branch
