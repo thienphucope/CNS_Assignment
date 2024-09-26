@@ -19,3 +19,10 @@ How to install NTL and GMP Library for C++
 To see Git Config: git config --list
 To see Remote: git remote -v
 To see branch: git branch
+
+
+Flow!
+
+Collect Data from Github: git fetch origin (First time: git clone URL)
+Aplly changes to local Git: git merge origin main
+//Do
