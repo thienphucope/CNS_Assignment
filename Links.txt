@@ -1,1 +1,6 @@
 https://www.overleaf.com/9953171639sckwrbknfzqk#9f16bb
+
+How to use Git
+
+1: Open a Unix like Linux envirionment like MSYS, MinGW or Ubuntu
+2: 
