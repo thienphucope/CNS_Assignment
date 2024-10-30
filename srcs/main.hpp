@@ -4,4 +4,4 @@
 #include <vector>
 
 using namespace std;
-using namespace NTL;
+//using namespace NTL;

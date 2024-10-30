@@ -1,6 +1,5 @@
 #include "main.hpp"
 
-
 // Function to compute the greatest common divisor (GCD)
 int gcd(int a, int b) {
     while (b != 0) {
@@ -56,27 +55,14 @@ pair<pair<int, int>, pair<int, int>> generateKeypair(int p, int q) {
     return make_pair(make_pair(e, n), make_pair(d, n));
 }
 
-// Function for modular exponentiation: (base^exp) % mod
-int modExp(int base, int exp, int mod) {
-    int result = 1;
-    while (exp > 0) {
-        if (exp % 2 == 1) {  // If exp is odd, multiply base with result
-            result = (result * base) % mod;
-        }
-        base = (base * base) % mod;  // Square the base
-        exp /= 2;  // Divide exp by 2
-    }
-    return result;
-}
-
 // Function to encrypt the message
 int encrypt(int publicKey, int n, int plaintext) {
-    return modExp(plaintext, publicKey, n);
+    return static_cast<int>(pow(plaintext, publicKey)) % n;
 }
 
 // Function to decrypt the message
 int decrypt(int privateKey, int n, int ciphertext) {
-    return modExp(ciphertext, privateKey, n);
+    return static_cast<int>(pow(ciphertext, privateKey)) % n;
 }
 
 int main() {
