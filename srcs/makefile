@@ -1,2 +1,2 @@
 main: main.cpp
-	g++ main.cpp -o main -lntl
+	g++ main.cpp -o main -lntl -lgmp

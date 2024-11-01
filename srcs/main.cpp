@@ -1,95 +1,139 @@
-#include "main.hpp"
+#include <iostream>
+#include <NTL/ZZ.h>
+#include <gmp.h>
+#include <ctime>
 
-// Function to compute the greatest common divisor (GCD)
-int gcd(int a, int b) {
+
+
+using namespace std;
+using namespace NTL;
+
+
+ZZ power_mod(ZZ base, ZZ exp, ZZ mod) {
+    ZZ result = ZZ(1);
+    base = base % mod;
+    while (exp > 0) {
+        if (exp % 2 == 1) { // Nếu exp lẻ
+            result = (result * base) % mod;
+        }
+        exp = exp >> 1; // Chia exp cho 2
+        base = (base * base) % mod; // Bình phương base
+    }
+    return result;
+}
+
+
+
+bool MillerRabinTest(ZZ to_test) {
+    if (to_test < 2) return false;   // 0 và 1 không phải số nguyên tố
+    if (to_test != 2 && to_test % 2 == 0) return false; // Số chẵn > 2 không phải số nguyên tố
+
+    // Lấy s và d từ to_test - 1 = 2^s * d
+    ZZ d = to_test - 1;
+    ZZ s = conv<ZZ>(0);
+    while (d % 2 == 0) {
+        d /= 2;
+        s++;
+    }
+
+    // Kiểm tra với một số lượng nhất định các cơ số
+    constexpr int accuracy = 20; // Số lượng kiểm tra
+   // std::random_device rd;
+   // std::mt19937 gen(rd());
+   // std::uniform_int_distribution<uint64_t> distr(2, to_test - 2); // Random a trong khoảng [2, to_test - 2]
+
+    for (int i = 0; i < accuracy; i++) {
+       // uint64_t a = distr(gen);
+        ZZ a = RandomBnd(to_test - 1) + 2;
+        ZZ x = power_mod(a, d, to_test); // x = a^d mod to_test
+
+        if (x == 1 || x == to_test - 1)
+            continue; // Nếu x là 1 hoặc to_test - 1, tiếp tục với lần kiểm tra tiếp theo
+
+        bool composite = true; // Giả định to_test là hợp số
+        for (uint64_t j = 0; j < s - 1; j++) {
+            x = power_mod(x, ZZ(2), to_test); // Tính x = x^2 mod to_test
+            if (x == to_test - 1) {
+                composite = false; // x là bội số của to_test - 1, không phải hợp số
+                break; // Thoát vòng lặp
+            }
+        }
+
+        if (composite) {
+            return false; // Nếu không tìm thấy bội số của to_test - 1, trả về false (hợp số)
+        }
+    }
+    
+    return true; // Nếu không có chứng minh nào về tính hợp số, trả về true (nguyên tố)
+}
+
+ZZ random_prime(int bit_length) {
+    ZZ p;
+    while (true) {
+        p = RandomBits_ZZ(bit_length);
+        if (MillerRabinTest(p)) return p;
+    
+}
+
+}
+// Tính GCD
+ZZ gcd(ZZ a, ZZ b) {
     while (b != 0) {
-        int temp = b;
+        ZZ t = b;
         b = a % b;
-        a = temp;
+        a = t;
     }
     return a;
 }
 
-// Function to compute the modular inverse of e mod phi(n)
-int modInverse(int e, int phi) {
-    int d = 0, x1 = 0, x2 = 1, y1 = 1;
-    int tempPhi = phi;
 
-    while (e > 0) {
-        int temp1 = tempPhi / e;
-        int temp2 = tempPhi - temp1 * e;
-        tempPhi = e;
-        e = temp2;
+// Tạo khóa RSA
+void generate_keypair(ZZ& n, ZZ& e, ZZ& d) {
+    ZZ p = random_prime(512);
+    ZZ q = random_prime(512);
+    n = p * q;
 
-        int x = x2 - temp1 * x1;
-        int y = d - temp1 * y1;
+    ZZ phi_n = (p - 1) * (q - 1);
 
-        x2 = x1;
-        x1 = x;
-        d = y1;
-        y1 = y;
-    }
-
-    if (tempPhi == 1) {
-        return d + phi;
-    }
-
-    return -1; // If modular inverse doesn't exist
-}
-
-// Function to generate public and private keys
-pair<pair<int, int>, pair<int, int>> generateKeypair(int p, int q) {
-    int n = p * q;
-    int phi = (p - 1) * (q - 1);
-
-    // Choose an integer e such that 1 < e < phi(n) and gcd(e, phi(n)) = 1
-    int e = 7; // As per the example
-    while (gcd(e, phi) != 1) {
+    // Chọn e
+    e = ZZ(65537); // Số nguyên tố nhỏ
+    while (gcd(e, phi_n) != 1) {
         e++;
     }
 
-    // Compute d, the modular inverse of e
-    int d = modInverse(e, phi);
-
-    // Public and private keys
-    return make_pair(make_pair(e, n), make_pair(d, n));
+    // Tính d
+    d = InvMod(e, phi_n);
 }
 
-// Function to encrypt the message
-int encrypt(int publicKey, int n, int plaintext) {
-    return static_cast<int>(pow(plaintext, publicKey)) % n;
+// Mã hóa
+ZZ encrypt(const ZZ& m, const ZZ& e, const ZZ& n) {
+    return power_mod(m, e, n);
 }
 
-// Function to decrypt the message
-int decrypt(int privateKey, int n, int ciphertext) {
-    return static_cast<int>(pow(ciphertext, privateKey)) % n;
+// Giải mã
+ZZ decrypt(const ZZ& c, const ZZ& d, const ZZ& n) {
+    return power_mod(c, d, n);
 }
 
 int main() {
-    // Example primes (small ones for simplicity)
-    int p = 11;
-    int q = 7;
+	cout<<"test: ";
+		for (int i = 0; i< 10; i++){
+	ZZ a = random_prime(8);
+	cout<<a<<" ";
+		}
+    ZZ n, e, d;
+    generate_keypair(n, e, d);
 
-    // Generate public and private keys
-    pair<pair<int, int>, pair<int, int>> keys = generateKeypair(p, q);
-    pair<int, int> publicKey = keys.first;
-    pair<int, int> privateKey = keys.second;
+    // Mã hóa một thông điệp
+    ZZ m = conv<ZZ>(9); // Thông điệp
+    cout << "Original message: " << m << endl;
 
-    // Display the keys
-    cout << "Public Key: (" << publicKey.first << ", " << publicKey.second << ")\n";
-    cout << "Private Key: (" << privateKey.first << ", " << privateKey.second << ")\n";
+    ZZ c = encrypt(m, e, n);
+    cout << "Encrypted message: " << c << endl;
 
-    // Message to encrypt (m = 9 as per the example)
-    int message = 9;
-    cout << "Original message: " << message << endl;
-
-    // Encrypt the message
-    int encryptedMessage = encrypt(publicKey.first, publicKey.second, message);
-    cout << "Encrypted message: " << encryptedMessage << endl;
-
-    // Decrypt the message
-    int decryptedMessage = decrypt(privateKey.first, privateKey.second, encryptedMessage);
-    cout << "Decrypted message: " << decryptedMessage << endl;
+    // Giải mã thông điệp
+    ZZ decrypted_m = decrypt(c, d, n);
+    cout << "Decrypted message: " << decrypted_m << endl;
 
     return 0;
 }
