@@ -49,7 +49,7 @@ std::vector<int> first_primes = { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29,
 // setting first and last bit to 1 to get 64 odd number 
 uint64_t getRandom64() {
 	// the value need to be 63 bits because you can not using 64 bit values do a^2 which is needed
-	constexpr int bits = 63; 
+	constexpr int bits = 5; 
 	std::bitset<bits> a;
 
 	std::random_device rd;
@@ -93,6 +93,8 @@ bool trialComposite(uint64_t a, uint64_t evenC, uint64_t to_test, int max_div_2)
 		if (powMod(a, temp * evenC, to_test) == to_test - 1)
 			return false;
 	}
+
+	
 
 	return true;
 }
