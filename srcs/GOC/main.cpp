@@ -26,58 +26,6 @@ bool is_prime(const ZZ& n) {
     return true;
 }
 
-// Sinh số nguyên tố ngẫu nhiên
-/*ZZ random_prime(int bit_length) {
-    ZZ p;
-    while (true) {
-        p = RandomBits_ZZ(bit_length);
-	if (!IsOdd(p)) p++;
-        if (is_prime(p)) return p;
-    }
-}
-*/
-ZZ random_prime(int bit_length) {
-	int num_threads = 100;
-    ZZ found_prime; // Variable to store the found prime
-    bool prime_found = false; // Flag to indicate if a prime has been found
-    mutex mtx; // Mutex to protect access to found_prime
-
-    auto worker = [&]() {
-        while (!prime_found) {
-            ZZ p = RandomBits_ZZ(bit_length); // Generate random number
-            if (is_prime(p)) {
-                lock_guard<mutex> lock(mtx); // Lock the mutex
-                if (!prime_found) { // Double-check to avoid race conditions
-                    found_prime = p; // Store found prime
-                    prime_found = true; // Mark that we found a prime
-                }
-            }
-        }
-    };
-
-    vector<thread> threads;
-    for (int i = 0; i < num_threads; ++i) {
-        threads.emplace_back(worker); // Create worker threads
-    }
-
-    // Wait for all threads to finish
-    for (auto& t : threads) {
-        t.join();
-    }
-
-    return found_prime; // Return the found prime number
-}
-// Tính GCD
-ZZ gcd(ZZ a, ZZ b) {
-    while (b != 0) {
-        ZZ t = b;
-        b = a % b;
-        a = t;
-    }
-    return a;
-}
-
-// Tính lũy thừa modulo
 ZZ power_mod(ZZ base, ZZ exp, ZZ mod) {
     ZZ result = ZZ(1);
     base = base % mod;
@@ -90,6 +38,80 @@ ZZ power_mod(ZZ base, ZZ exp, ZZ mod) {
     }
     return result;
 }
+
+
+
+bool MillerRabinTest(ZZ to_test) {
+    if (to_test < 2) return false;   // 0 và 1 không phải số nguyên tố
+    if (to_test != 2 && to_test % 2 == 0) return false; // Số chẵn > 2 không phải số nguyên tố
+
+    // Lấy s và d từ to_test - 1 = 2^s * d
+    ZZ d = to_test - 1;
+    ZZ s = conv<ZZ>(0);
+    while (d % 2 == 0) {
+        d /= 2;
+        s++;
+    }
+
+    // Kiểm tra với một số lượng nhất định các cơ số
+    constexpr int accuracy = 20; // Số lượng kiểm tra
+   // std::random_device rd;
+   // std::mt19937 gen(rd());
+   // std::uniform_int_distribution<uint64_t> distr(2, to_test - 2); // Random a trong khoảng [2, to_test - 2]
+
+    for (int i = 0; i < accuracy; i++) {
+       // uint64_t a = distr(gen);
+        ZZ a = RandomBnd(to_test - 1) + 2;
+        ZZ x = power_mod(a, d, to_test); // x = a^d mod to_test
+
+        if (x == 1 || x == to_test - 1)
+            continue; // Nếu x là 1 hoặc to_test - 1, tiếp tục với lần kiểm tra tiếp theo
+
+        bool composite = true; // Giả định to_test là hợp số
+        for (uint64_t j = 0; j < s - 1; j++) {
+            x = power_mod(x, 2, to_test); // Tính x = x^2 mod to_test
+            if (x == to_test - 1) {
+                composite = false; // x là bội số của to_test - 1, không phải hợp số
+                break; // Thoát vòng lặp
+            }
+        }
+
+        if (composite) {
+            return false; // Nếu không tìm thấy bội số của to_test - 1, trả về false (hợp số)
+        }
+    }
+    
+    return true; // Nếu không có chứng minh nào về tính hợp số, trả về true (nguyên tố)
+}
+// Sinh số nguyên tố ngẫu nhiên
+/*ZZ random_prime(int bit_length) {
+    ZZ p;
+    while (true) 
+        p = RandomBits_ZZ(bit_length);
+	if (!IsOdd(p)) p++;
+        if (is_prime(p)) return p;
+    }
+}
+*/
+ZZ random_prime(int bit_length) {
+    ZZ p;
+    while (true) {
+        p = RandomBits_ZZ(bit_length);
+        if (MillerRabinTest(p)) return p;
+    
+}
+
+}
+// Tính GCD
+ZZ gcd(ZZ a, ZZ b) {
+    while (b != 0) {
+        ZZ t = b;
+        b = a % b;
+        a = t;
+    }
+    return a;
+}
+
 
 // Tạo khóa RSA
 void generate_keypair(ZZ& n, ZZ& e, ZZ& d) {
