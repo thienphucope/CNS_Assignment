@@ -1,2 +1,2 @@
-main: main.cpp
-	g++ main.cpp -o main -lntl -lgmp
+main: main.cpp RSA.cpp
+	g++ main.cpp RSA.cpp -o main -lntl
