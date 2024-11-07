@@ -1,5 +1,6 @@
 #include "main.hpp"
 
+ZZ InverseMod(ZZ a, ZZ m)
 ZZ power_mod(ZZ base, ZZ exp, ZZ mod);
 bool MillerRabinTest(ZZ to_test);
 ZZ random_prime(int bit_length);

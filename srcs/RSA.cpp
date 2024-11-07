@@ -1,5 +1,31 @@
 #include "RSA.hpp"
 
+
+ZZ InverseMod(ZZ a, ZZ m) {
+    ZZ m0 = m, t, q;
+    ZZ x0 = ZZ(0), x1 = ZZ(1);
+
+    if (m == 1) return ZZ(0);  // Trường hợp đặc biệt, nghịch đảo modulo của bất kỳ số nào mod 1 là 0
+
+    while (a > 1) {
+        q = a / m;  // Thương nguyên
+        t = m;
+
+        m = a % m;  // Lấy phần dư
+        a = t;
+        t = x0;
+
+        x0 = x1 - q * x0;  // Cập nhật x0 và x1 để giữ kết quả nghịch đảo
+        x1 = t;
+    }
+
+    // Đảm bảo x1 là số dương
+    if (x1 < 0) x1 += m0;
+
+    return x1;
+}
+
+
 ZZ power_mod(ZZ base, ZZ exp, ZZ mod) {
     ZZ result = ZZ(1);
     base = base % mod;
@@ -93,7 +119,7 @@ void generate_keypair(ZZ& n, ZZ& e, ZZ& d) {
     }
 
     // Tính d
-    d = InvMod(e, phi_n);
+    d = InverseMod(e, phi_n);
 }
 
 // Mã hóa
