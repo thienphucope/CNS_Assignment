@@ -1,6 +1,37 @@
 #include "RSA.hpp"
 
 
+
+#include <string>
+#include <stdexcept>
+
+// Hàm chuyển chuỗi sang số nguyên theo quy tắc UTF-8
+int stringToNumberUTF8(const std::string& str) {
+    int number = 0;
+    
+    // Duyệt qua từng ký tự trong chuỗi và cộng dồn vào số nguyên
+    for (char c : str) {
+        number = number * 256 + static_cast<unsigned char>(c); // 256 vì UTF-8 mã hóa trong phạm vi 1 byte
+    }
+    
+    return number;
+}
+
+// Hàm chuyển số nguyên ngược lại thành chuỗi theo quy tắc UTF-8
+std::string numberToStringUTF8(ZZ number) {
+    std::string str;
+    
+    // Chuyển số nguyên thành chuỗi theo mã ASCII UTF-8
+    while (number > 0) {
+        char c = static_cast<char>(number % 256); // Lấy byte cuối
+        str.insert(str.begin(), c);  // Chèn vào đầu chuỗi
+        number /= 256;  // Chia cho 256 để xử lý byte tiếp theo
+    }
+    
+    return str;
+}
+
+
 ZZ InverseMod(ZZ a, ZZ m) {
     ZZ m0 = m, t, q;
     ZZ x0 = ZZ(0), x1 = ZZ(1);
@@ -123,13 +154,13 @@ void generate_keypair(ZZ& n, ZZ& e, ZZ& d) {
 }
 
 // Mã hóa
-ZZ encrypt(const ZZ& m, const ZZ& e, const ZZ& n) {
-    return power_mod(m, e, n);
+ZZ encrypt(const ZZ& ToNumber, const ZZ& e, const ZZ& n) {
+    return power_mod(ToNumber, e, n);
 }
 
 // Giải mã
-ZZ decrypt(const ZZ& c, const ZZ& d, const ZZ& n) {
-    return power_mod(c, d, n);
+ZZ decrypt(const ZZ& encrypted_m, const ZZ& d, const ZZ& n) {
+    return power_mod(encrypted_m, d, n);
 }
 
 
