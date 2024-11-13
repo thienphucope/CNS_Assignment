@@ -1,26 +1,23 @@
 #include "RSA.hpp"
 
 int main() {
-        cout<<"test: ";
-                for (int i = 0; i< 10; i++){
-        ZZ a = random_prime(8);
-        cout<<a<<" ";
-                }
     ZZ n, e, d;
     generate_keypair(n, e, d);
 
     // Mã hóa một thông điệp
-    string message = "Cai Dau Ma Cuoi Cung Cung Xong";
+    string message = "The Rain Is Ceasing But I'm Not Feeling Sweet";
+    cout<<"Sent Message: "<<message<<endl<<endl;
     ZZ m = stringToNumber(message);
     
-    cout << "Original message: " << m << endl;
+    cout << "ConvertToNumber: " << m << endl<<endl;
 
     ZZ c = encrypt(m, e, n);
-    cout << "Encrypted message: " << c << endl;
+    cout << "Encrypted Message: " << c << endl<<endl;
 
     // Giải mã thông điệp
     ZZ decrypted_m = decrypt(c, d, n);
     string dmessage = numberToString(decrypted_m);
-    cout << "Decrypted message: " << decrypted_m << endl;
-    cout << "message" << dmessage;
+    cout << "Decrypted Message: " << decrypted_m << endl<<endl;
+    cout << "ConverToString -> Received Message: " << dmessage<<endl;
+    return 0;
 }
