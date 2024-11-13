@@ -10,7 +10,7 @@ int main() {
     generate_keypair(n, e, d);
 
     // Mã hóa một thông điệp
-    string message = "Hello World";
+    string message = "Cai Dau Ma Cuoi Cung Cung Xong";
     ZZ m = stringToNumber(message);
     
     cout << "Original message: " << m << endl;

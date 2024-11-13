@@ -17,14 +17,12 @@ ZZ stringToNumber(string str)
 
 string numberToString(ZZ num)
 {
-    long len = ceil(log(num+1)/log(128));
-    char str[len];
-    for(long i = len-1; i >= 0; i--)
-    {
-        str[i] = conv<int>(num % 128);
-        num /= 128;
+    string str;
+    while(num>0){
+	    unsigned char ch = static_cast<unsigned char>(to_long(num %128));
+	    str = string(1, ch) + str;
+	    num/=128;
     }
-
     return (string) str;
 }
 
