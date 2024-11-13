@@ -1,6 +1,33 @@
 #include "RSA.hpp"
 
 
+ZZ stringToNumber(string str)
+{
+    ZZ number = conv<ZZ>(str[0]);
+    long len = str.length();
+    for(long i = 1; i < len; i++)
+    {
+        number *= 128;
+        number += conv<ZZ>(str[i]);
+    }
+
+    return number;
+}
+
+
+string numberToString(ZZ num)
+{
+    long len = ceil(log(num)/log(128));
+    char str[len];
+    for(long i = len-1; i >= 0; i--)
+    {
+        str[i] = conv<int>(num % 128);
+        num /= 128;
+    }
+
+    return (string) str;
+}
+
 ZZ InverseMod(ZZ a, ZZ m) {
     ZZ m0 = m, t, q;
     ZZ x0 = ZZ(0), x1 = ZZ(1);

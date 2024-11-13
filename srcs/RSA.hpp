@@ -8,3 +8,6 @@ ZZ gcd(ZZ a, ZZ b);
 void generate_keypair(ZZ& n, ZZ& e, ZZ& d);
 ZZ encrypt(const ZZ& m, const ZZ& e, const ZZ& n);
 ZZ decrypt(const ZZ& c, const ZZ& d, const ZZ& n);
+
+ZZ stringToNumber(string str)
+string numberToString(ZZ num)
