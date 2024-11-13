@@ -10,8 +10,7 @@ int main() {
     generate_keypair(n, e, d);
 
     // Mã hóa một thông điệp
-    string = message;
-    cin>>string;
+    string message = "Hello World";
     ZZ m = stringToNumber(message);
     
     cout << "Original message: " << m << endl;
@@ -22,5 +21,6 @@ int main() {
     // Giải mã thông điệp
     ZZ decrypted_m = decrypt(c, d, n);
     string dmessage = numberToString(decrypted_m);
-    cout << "Decrypted message: " << dmessage << endl;
+    cout << "Decrypted message: " << decrypted_m << endl;
+    cout << "message" << dmessage;
 }

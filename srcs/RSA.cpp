@@ -17,7 +17,7 @@ ZZ stringToNumber(string str)
 
 string numberToString(ZZ num)
 {
-    long len = ceil(log(num)/log(128));
+    long len = ceil(log(num+1)/log(128));
     char str[len];
     for(long i = len-1; i >= 0; i--)
     {
