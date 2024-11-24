@@ -1,7 +1,0 @@
-Links:
-1. Public Key Cryptography: RSA Encryption Algorithm. YouTube, Art of Problem, 31/7/2012, https://youtu.be/wXB-V_Keiu8?si=OVSGt8JsYtVH9Fem
-2. RSA (mã hóa). (2023, September 24). In Wikipedia. https://vi.wikipedia.org/wiki/RSA_(m%C3%A3_h%C3%B3a)
-3. Miller–Rabin primality test. (2024, August 6). In Wikipedia, https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test
-Documents:
-1. Mật Mã và An Ninh Mạng - Chương III - Mã hóa khóa công khai
-

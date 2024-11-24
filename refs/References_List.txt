@@ -1,0 +1,17 @@
+Tài Liệu Tham Khảo:
+
+[1] Art of Problem. (2012, July 31). Public Key Cryptography: RSA Encryption Algorithm.
+[YouTube]. Retrieved from https://youtu.be/wXB-V_Keiu8?si=OVSGt8JsYtVH9Fem
+[2] Cormen, T. H., Leiserson, C. E., Rivest, R. L., Stein, C. (2001). Introduction to Algorithms
+(2nd ed.). MIT Press and McGraw-Hill. ISBN 0262032937. Section 31.7: The RSA public-key
+cryptosystem, pp. 881–887.
+[3] Miller, G. L. (1976). Riemann’s Hypothesis and Tests for Primality. Journal of Computer and
+System Sciences, 13(3), 300–317. 10.1145/800116.803773, S2CID 10690396.
+[4] Rabin, M. O. (1980). Probabilistic algorithm for testing primality. Journal of Number Theory,
+12(1), 128–138. 10.1016/0022-314X(80)90084-0.
+[5] Tài liệu học thuật. Mật Mã và An Ninh Mạng - Chương III - Mã hóa khóa công khai.
+
+Mã nguồn mở:
+
+Thư viện NTL (NTL: A Library for doing Number Theory) nằm ở tệp "ntl-11.5.1.tar.gz"
+
