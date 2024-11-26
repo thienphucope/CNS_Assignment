@@ -1,11 +1,16 @@
 #include "RSA.hpp"
 
-int main() {
+int main(int argc, char *argv[]) {
+    if (argc != 2){
+	    fprintf(stderr, "Usage: %s <message>\n", argv[0]);
+	    return -1;
+    }
+
     ZZ n, e, d;
     generate_keypair(n, e, d);
 
     // Mã hóa một thông điệp
-    string message = "The Rain Is Ceasing But I'm Not Feeling Sweet";
+    string message = argv[1];
     cout<<"Sent Message: "<<message<<endl<<endl;
     ZZ m = stringToNumber(message);
     
