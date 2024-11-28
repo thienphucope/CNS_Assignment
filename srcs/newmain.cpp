@@ -1,10 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <NTL/ZZ.h>
 #include "RSA.hpp"
-using namespace std;
-using namespace NTL;
 
 
 void saveKeyToFile(const string& filename, const ZZ& n, const ZZ& key) {
