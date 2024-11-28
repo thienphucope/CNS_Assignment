@@ -1,4 +1,4 @@
-#include "main.hpp"
+#include "newmain.hpp"
 
 ZZ InverseMod(ZZ a, ZZ m);
 ZZ power_mod(ZZ base, ZZ exp, ZZ mod);
