@@ -130,9 +130,28 @@ ZZ gcd(ZZ a, ZZ b) {
 
 
 // Tạo khóa RSA
-void generate_keypair(ZZ& n, ZZ& e, ZZ& d) {
-    ZZ p = random_prime(512);
-    ZZ q = random_prime(512);
+// void generate_keypair(ZZ& n, ZZ& e, ZZ& d) {
+//     ZZ p = random_prime(512);
+//     ZZ q = random_prime(512);
+//     n = p * q;
+
+//     ZZ phi_n = (p - 1) * (q - 1);
+
+//     // Chọn e
+//     e = ZZ(65537); // Số nguyên tố nhỏ
+//     while (gcd(e, phi_n) != 1) {
+//         e++;
+//     }
+
+//     // Tính d
+//     d = InverseMod(e, phi_n);
+// }
+
+void generate_keypair(ZZ& n, ZZ& e, ZZ& d, int keyLength) {
+    // Sinh hai số nguyên tố p và q với độ dài khóa được chỉ định
+    ZZ p = random_prime(keyLength / 2);
+    ZZ q = random_prime(keyLength / 2);
+    
     n = p * q;
 
     ZZ phi_n = (p - 1) * (q - 1);
