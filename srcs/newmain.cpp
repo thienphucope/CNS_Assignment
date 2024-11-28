@@ -1,6 +1,5 @@
 #include "RSA.hpp"
 
-
 void saveKeyToFile(const string& filename, const ZZ& n, const ZZ& key) {
     ofstream keyFile(filename);
     if (!keyFile) {
@@ -166,6 +165,4 @@ int main() {
     }
     return 0;
 }
-// Previous implementations of utility functions remain the same as in the original code
-// (stringToNumber, numberToString, InverseMod, power_mod, MillerRabinTest, 
-// random_prime, gcd, generate_keypair, encrypt, decrypt)
+
