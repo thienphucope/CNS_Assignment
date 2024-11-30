@@ -1,8 +1,10 @@
+
 #include <iostream>
-#include <NTL/ZZ.h>
+#include <fstream>
 #include <string>
-#include <stdio.h>
-#include <stdlib.h>
+#include <filesystem>
+#include <NTL/ZZ.h>
+
 using namespace std;
 using namespace NTL;
-
+namespace fs = std::filesystem;
