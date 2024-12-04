@@ -10,6 +10,6 @@ Cách chạy chương trình
 1. Cài thư viện NTL ở trên linux theo hướng dẫn tại: https://libntl.org/doc/tour-unix.html
 2. Di chuyển vào thư mục srcs
 3. Mở terminal chạy lệnh make
-4. Gõ ./main <message> + enter
+4. Gõ ./main và làm theo hướng dẫn của CLI
 
 Lưu ý: Chương trình này được chạy hoàn toàn trên hệ điều hành Linux.
