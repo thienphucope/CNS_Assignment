@@ -1,3 +1,5 @@
+Hiện thực RSA bằng C++ trên Linux sử dụng thư viện NTL
+
 Cấu trúc files:
 
 1. refs: chứa toàn bộ nội dung tham khảo lưu ở dạng pdf và mã nguồn NTL
